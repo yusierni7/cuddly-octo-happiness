@@ -7,531 +7,648 @@ layout: null
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    
-    <script>
-    (function() {
-        var hostname = location.hostname;
-        var parts = hostname.split(".");
-        var fullName = parts[0];
-        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
-        var formatText = function(str) {
-            return str.replace(/[-_]/g, " ").replace(/\+/g, " ").replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-        };
-        var displayDomain = formatText(fullName);
-        document.title = displayDomain + " - Stunning Photo Collection";
-        var metaDesc = document.querySelector("meta[name=\"description\"]") || document.createElement("meta");
-        metaDesc.name = "description";
-        metaDesc.content = displayDomain + " - Discover breathtaking photography collections.";
-        if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
-        var canonical = document.querySelector("link[rel=\"canonical\"]") || document.createElement("link");
-        canonical.setAttribute("rel", "canonical");
-        canonical.setAttribute("href", location.href);
-        if (!canonical.parentNode) document.head.appendChild(canonical);
-        var schemaData = {"@context":"https://schema.org","@type":"WebSite","name":displayDomain,"description":"Beautiful photo gallery","url":location.origin};
-        var schemaScript = document.createElement("script");
-        schemaScript.type = "application/ld+json";
-        schemaScript.textContent = JSON.stringify(schemaData);
-        document.head.appendChild(schemaScript);
-    })();
-    </script>
-
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <title id="dynamic-title">Leaked Content Archive � Influencer Index</title>
+    <meta id="dynamic-description" name="description" content="Comprehensive archive of viral leaked content from influencers, TikTokers, and creators. Curated index for research and documentation.">
+    <link id="dynamic-canonical" rel="canonical" href="https://example.com/item/">
     <style>
-        /* ===== RESET & BASE ===== */
-        *,*::before,*::after{box-sizing:border-box}
-        html{overflow-x:hidden;background:#0a0a0f;scroll-behavior:smooth}
-        body{
-            width:100%;min-width:320px;max-width:100%;margin:0;padding:0;
-            background:#0a0a0f;font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,sans-serif;
-            color:#e0e0e0;line-height:1.4;-webkit-font-smoothing:antialiased;
+        /* ============================================
+           GLOBAL COLOR SYSTEM (mudah diedit di kemudian hari)
+           ============================================ */
+        :root {
+            /* Warna Utama */
+            --bg-body: #0b0b0f;
+            --bg-card: #11111a;
+            --border-color: #1f1f2a;
+            --text-primary: #ededee;
+            --text-secondary: #6b7280;
+            --text-muted: #4a4a5a;
+            
+            /* Warna Aksen / Brand */
+            --accent-primary: #a855f7;
+            --accent-primary-hover: #c084fc;
+            --accent-glow: rgba(168, 85, 247, 0.2);
+            
+            /* Warna Status */
+            --trend-bg: #1a1a2a;
+            --trend-text: #c084fc;
+            
+            /* Gradien */
+            --grad-card: linear-gradient(135deg, #1a1a2a, #0f0f18);
+            
+            /* Transisi */
+            --transition-default: all 0.2s ease;
         }
-
-        /* ===== TOP BAR ===== */
-        .topbar{
-            width:100%;position:fixed;top:0;left:0;z-index:1000;
-            background:rgba(10,10,15,.95);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-            border-bottom:1px solid rgba(245,158,11,.1);
-            padding:10px 16px;display:flex;align-items:center;gap:12px;
-        }
-        .topbar-avatar{flex-shrink:0;line-height:0}
-        .topbar-avatar svg{width:30px;height:30px}
-        .topbar-title{
-            flex:1;font-size:15px;font-weight:700;color:#fff;letter-spacing:.3px;
-            white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-        }
-        .topbar-menu{
-            width:38px;height:38px;flex-shrink:0;
-            background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);
-            cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;
-            border-radius:50%;transition:all .2s;
-        }
-        .topbar-menu:active{background:rgba(245,158,11,.2);transform:scale(.94)}
-        .topbar-menu svg{width:20px;height:20px;stroke:#f59e0b;fill:none;stroke-width:2;stroke-linecap:round}
-
-        .slide-panel{
-            display:none;position:fixed;top:50px;right:10px;z-index:999;
-            background:#1a1a20;border:1px solid rgba(245,158,11,.15);border-radius:14px;padding:6px;
-            min-width:200px;box-shadow:0 12px 40px rgba(0,0,0,.7);
-        }
-        .slide-panel.open{display:block}
-        .slide-panel ul{list-style:none;margin:0;padding:0}
-        .slide-panel li+li{border-top:1px solid rgba(255,255,255,.03)}
-        .slide-panel a{
-            display:block;padding:13px 16px;color:#bbb;text-decoration:none;
-            font-size:14px;font-weight:500;border-radius:10px;transition:all .15s;
-        }
-        .slide-panel a:active{background:rgba(245,158,11,.1);color:#f59e0b}
-
-        /* ===== DESKTOP NAV ===== */
-        .desktop-nav{display:none}
-
-        /* ===== AD CONTAINER ===== */
-        .ad-box{
-            display:flex;justify-content:center;align-items:center;
-            margin:0 auto;max-width:100%;overflow:hidden;
-            background:#111118;min-height:50px;border-radius:8px;
-        }
-        .ad-box ins{max-width:100%}
-        .ad-desktop{display:none}
-        .ad-mobile{display:flex}
-        .ad-both{display:flex}
-
-        .ad-banner-full{
-            padding:14px 8px;background:#111118;margin:0;
-            border-top:1px solid rgba(245,158,11,.06);
-            border-bottom:1px solid rgba(245,158,11,.06);
-        }
-        .ad-banner-full:first-child{margin-top:50px}
-
-        .ad-native{padding:8px 0;background:transparent}
-
-        /* ===== MAIN CONTENT ===== */
-        .main-content{width:100%;max-width:1200px;margin:0 auto;padding:0}
-
-        /* ===== HERO (16:9) ===== */
-        .hero-section{margin:0}
-        .hero-card{
-            position:relative;overflow:hidden;border-radius:0;
-            background:#111;margin:0;
-            aspect-ratio:16/9;
-        }
-        .hero-card a{display:block;width:100%;height:100%}
-        .hero-card img{
-            width:100%;height:100%;object-fit:cover;display:block;
-            transition:transform .5s ease;
-        }
-        .hero-card:hover img{transform:scale(1.02)}
-        .hero-overlay{
-            position:absolute;bottom:0;left:0;right:0;
-            padding:40px 16px 16px;
-            background:linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.4) 50%, transparent 100%);
-            pointer-events:none;
-        }
-        .hero-overlay h2{
-            margin:0 0 4px;font-size:22px;font-weight:800;color:#fff;line-height:1.2;
-            display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-        }
-        .hero-badge{
-            display:inline-block;padding:3px 8px;margin-bottom:6px;
-            background:#f59e0b;color:#000;font-size:10px;font-weight:700;
-            border-radius:3px;text-transform:uppercase;letter-spacing:.5px;
-        }
-
-        /* ===== SECTION HEADER ===== */
-        .section-header{
-            display:flex;align-items:center;gap:10px;padding:20px 12px 8px;
-            max-width:1200px;margin:0 auto;
-        }
-        .section-header h2{
-            margin:0;font-size:17px;font-weight:800;color:#fff;
-            display:flex;align-items:center;gap:8px;
-        }
-        .section-header h2 .icon-dot{
-            width:8px;height:8px;border-radius:50%;background:#f59e0b;
-            display:inline-block;flex-shrink:0;
-        }
-
-        /* ===== HORIZONTAL SCROLL (3:4 portrait) ===== */
-        .scroll-section{padding:0 0 0 12px}
-        .scroll-row{
-            display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;
-            -webkit-overflow-scrolling:touch;padding-bottom:8px;
-            scrollbar-width:none;
-        }
-        .scroll-row::-webkit-scrollbar{display:none}
-        .scroll-card{
-            flex:0 0 180px;scroll-snap-align:start;
-            position:relative;overflow:hidden;border-radius:10px;
-            background:#15151a;transition:all .2s;
-            aspect-ratio:3/4;
-        }
-        .scroll-card:active{transform:scale(.98)}
-        .scroll-card a{display:block;width:100%;height:100%}
-        .scroll-card img{
-            width:100%;height:100%;object-fit:cover;display:block;
-            transition:transform .4s ease;
-        }
-        .scroll-card-body{
-            position:absolute;bottom:0;left:0;right:0;
-            padding:20px 10px 8px;
-            background:linear-gradient(to top, rgba(0,0,0,.88) 0%, transparent 100%);
-            pointer-events:none;
-        }
-        .scroll-card-body h3{
-            margin:0 0 2px;font-size:12px;font-weight:700;color:#fff;
-            display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-        }
-
-        /* ===== GRID (1:1 square) ===== */
-        .grid-section{padding:0 8px}
-        .grid-masonry{
-            display:grid;grid-template-columns:1fr 1fr;gap:6px;
-            max-width:1200px;margin:0 auto;
-        }
-        .grid-card{
-            position:relative;overflow:hidden;border-radius:8px;
-            background:#111118;transition:all .2s;
-            aspect-ratio:1/1;
-        }
-        .grid-card:active{transform:scale(.98)}
-        .grid-card a{display:block;width:100%;height:100%}
-        .grid-card img{
-            width:100%;height:100%;object-fit:cover;display:block;
-            transition:transform .4s ease;
-        }
-        .grid-card-overlay{
-            position:absolute;bottom:0;left:0;right:0;
-            padding:20px 8px 8px;
-            background:linear-gradient(to top, rgba(0,0,0,.85) 0%, transparent 100%);
-            pointer-events:none;
-        }
-        .grid-card-overlay h3{
-            margin:0 0 2px;font-size:11px;font-weight:700;color:#fff;
-            display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-        }
-        .grid-card-overlay span{
-            font-size:8px;color:rgba(255,255,255,.4);display:block;margin-top:1px;
-        }
-
-        /* Iklan native di dalam grid */
-        .ad-native-card{
-            background:transparent;border-radius:8px;
-            display:flex;justify-content:center;align-items:center;
-            min-height:120px;aspect-ratio:1/1;
-        }
-
-        /* ===== EMPTY STATE ===== */
-        .empty-section{
-            text-align:center;padding:60px 16px;
-        }
-        .empty-section p{
-            color:rgba(255,255,255,.3);font-size:14px;margin:0;
-        }
-
-        /* ============================
-           TABLET (min-width:600px)
-           ============================ */
-        @media(min-width:600px){
-            .ad-desktop{display:flex}
-            .ad-mobile{display:none}
-            .ad-both{display:flex}
-
-            .topbar{padding:12px 20px}
-            .topbar-title{font-size:16px}
-            .ad-banner-full:first-child{margin-top:54px}
-            .ad-banner-full{padding:16px 12px}
-            .hero-overlay{padding:50px 24px 20px}
-            .hero-overlay h2{font-size:28px}
-            .section-header{padding:24px 16px 10px}
-            .section-header h2{font-size:20px}
-            .scroll-card{flex:0 0 200px}
-            .scroll-card-body h3{font-size:13px}
-            .grid-masonry{grid-template-columns:repeat(3,1fr);gap:8px}
-            .grid-card{border-radius:10px}
-            .grid-card-overlay h3{font-size:13px}
-            .grid-card-overlay span{font-size:10px}
-        }
-
-        /* ============================
-           DESKTOP (min-width:900px)
-           ============================ */
-        @media(min-width:900px){
-            body{max-width:1400px;margin:0 auto}
-            .topbar{
-                left:50%;transform:translateX(-50%);max-width:1400px;
-                padding:12px 24px;
+        
+        /* Dark mode fallback (tetap konsisten) */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-body: #0b0b0f;
+                --bg-card: #11111a;
+                --border-color: #1f1f2a;
+                --text-primary: #ededee;
             }
-            .topbar-title{font-size:14px;font-weight:600;color:#ccc}
-            .topbar-menu{display:none}
-            .slide-panel{display:none!important}
-            .ad-banner-full:first-child{margin-top:56px}
-            .ad-banner-full{padding:18px 16px}
-
-            .hero-overlay{padding:60px 32px 24px}
-            .hero-overlay h2{font-size:36px}
-            .section-header{padding:28px 20px 12px}
-            .scroll-card{flex:0 0 220px}
-            .scroll-card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.5)}
-            .scroll-card:hover img{transform:scale(1.06)}
-            .scroll-card-body h3{font-size:14px}
-            .grid-masonry{grid-template-columns:repeat(4,1fr);gap:10px}
-            .grid-card{border-radius:12px}
-            .grid-card:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.4)}
-            .grid-card:hover img{transform:scale(1.04)}
-            .grid-card-overlay h3{font-size:14px}
-            .grid-card-overlay span{font-size:10px}
-
-            .desktop-nav{
-                display:flex;gap:2px;padding:0 20px;max-width:1400px;margin:0 auto 6px;
-            }
-            .desktop-nav a{
-                padding:7px 14px;color:#999;text-decoration:none;font-size:12px;font-weight:500;
-                border-radius:6px;transition:all .15s;
-            }
-            .desktop-nav a:hover{color:#f59e0b;background:rgba(245,158,11,.06)}
         }
 
-        @media(min-width:1100px){
-            .scroll-card{flex:0 0 240px}
-            .grid-masonry{grid-template-columns:repeat(5,1fr)}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-body);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            color: var(--text-primary);
+        }
+
+        .site-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        /* header */
+        .site-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-primary);
+        }
+
+        .logo h1 {
+            font-size: 1.4rem;
+            letter-spacing: -0.5px;
+            color: #fff;
+            margin-top: 0.25rem;
+        }
+
+        .trend-badge {
+            background: var(--trend-bg);
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            color: var(--trend-text);
+        }
+
+        /* breadcrumb */
+        .breadcrumb {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .breadcrumb span:last-child {
+            color: var(--accent-primary);
+        }
+
+        /* stat strip */
+        .stat-strip {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 0.75rem 1.25rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.7rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* gallery grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin: 1.5rem 0;
+        }
+
+        .leak-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: var(--transition-default);
+        }
+
+        .leak-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-3px);
+        }
+
+        .card-media {
+            height: 160px;
+            background: var(--grad-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .card-content {
+            padding: 1rem;
+        }
+
+        .card-category {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .card-stats {
+            display: flex;
+            gap: 0.75rem;
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .card-link {
+            margin-top: 0.5rem;
+        }
+
+        .card-link a {
+            color: var(--accent-primary-hover);
+            text-decoration: none;
+            font-size: 0.75rem;
+        }
+
+        /* tag cloud */
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .tag {
+            background: var(--trend-bg);
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: var(--accent-primary-hover);
+            text-decoration: none;
+        }
+
+        .tag:hover {
+            background: #2a2a3a;
+        }
+
+        /* featured section */
+        .featured-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .featured-item {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border: 1px solid var(--border-color);
+        }
+
+        /* footer */
+        hr {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 2rem 0;
+        }
+
+        .footer-note {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .default-home {
+            display: block;
+        }
+
+        .query-results {
+            display: none;
+        }
+
+        @media (max-width: 640px) {
+            .site-wrapper { padding: 1rem; }
+            .gallery-grid { gap: 0.75rem; }
         }
     </style>
-    
 {% include head.html %}
-{% include verif.html %}
+  </head>
+<body><div loading="lazy">
+<nav>
+{% include /kw/p/rare.html %}
+</nav>
 
-</head>
-<body>
+<div class="site-wrapper">
+    <!-- DEFAULT HOMEPAGE -->
+    <div id="default-home" class="default-home">
+        <div class="site-header">
+            <div class="logo">
+                <div>LEAKED INDEX</div>
+                <!-- h1 tertinggi tanpa penghalang -->
+                <h1>Influencer Content Archive</h1>
+            </div>
+            <div class="trend-badge"> 2,400+ archived entries</div>
+        </div>
 
-    <!-- TOPBAR -->
-    <header class="topbar">
-        <div id="domainAvatar" class="topbar-avatar"></div>
-        <span id="blogMainTitle" class="topbar-title"></span>
-        <button class="topbar-menu" id="blogMenuToggle" aria-label="Menu">
-            <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-            <svg viewBox="0 0 24 24" style="display:none"><path d="M6 6l12 12M6 18l12-12"/></svg>
-        </button>
-    </header>
+        <div class="stat-strip">
+            <span> <strong>15k+</strong> media files</span>
+            <span> <strong>600+</strong> creators</span>
+            <span> <strong>daily</strong> updates</span>
+            <span> <strong>viral</strong> collection</span>
+        </div>
 
-    <!-- SLIDE PANEL -->
-    <nav id="blogMenuPanel" class="slide-panel">
-        <ul>
-            <li><a href="/">✦ Home</a></li>
-            <li><a href="/contact/">✉ Contact</a></li>
-            <li><a href="/privacy-policy/">🔒 Privacy</a></li>
-            <li><a href="/terms-and-conditions/">📋 Terms</a></li>
-        </ul>
-    </nav>
+        <div class="gallery-grid">
+            <div class="leak-card">
+                <div class="card-media"></div>
+                <div class="card-content">
+                    <div class="card-category">TRENDING</div>
+                    <div class="card-title">Viral Leak Drops</div>
+                    <div class="card-stats"><span> 200+ files</span><span> #1 this week</span></div>
+                    <div class="card-link"><a href="/item/?q=trending+leak+drops">View collection </a></div>
+                </div>
+            </div>
+            <div class="leak-card">
+                <div class="card-media"></div>
+                <div class="card-content">
+                    <div class="card-category">VIDEO</div>
+                    <div class="card-title">TikTok Leaks Archive</div>
+                    <div class="card-stats"><span> 500+ clips</span><span> deleted content</span></div>
+                    <div class="card-link"><a href="/item/?q=tiktok+leaks+archive">Watch archive </a></div>
+                </div>
+            </div>
+            <div class="leak-card">
+                <div class="card-media"></div>
+                <div class="card-content">
+                    <div class="card-category">PHOTO</div>
+                    <div class="card-title">OnlyFans Leaks</div>
+                    <div class="card-stats"><span> 1k+ images</span><span> exclusive</span></div>
+                    <div class="card-link"><a href="/item/?q=onlyfans+leaks+gallery">Browse </a></div>
+                </div>
+            </div>
+            <div class="leak-card">
+                <div class="card-media"></div>
+                <div class="card-content">
+                    <div class="card-category">EXCLUSIVE</div>
+                    <div class="card-title">Rare Leak Vault</div>
+                    <div class="card-stats"><span> private</span><span> limited</span></div>
+                    <div class="card-link"><a href="/item/?q=rare+leak+vault">Enter vault </a></div>
+                </div>
+            </div>
+        </div>
 
-    <script>
-    (function(){
-        var host = window.location.hostname.split(".");
-        var sub = host[0];
-        if (sub.toLowerCase() === "www") sub = host[1] || "";
-        var clean = sub.replace(/-/g, " ");
-        document.getElementById("blogMainTitle").textContent = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-    })();
-    (function(){
-        var btn = document.getElementById("blogMenuToggle");
-        var panel = document.getElementById("blogMenuPanel");
-        var mi = btn.querySelector("svg:first-child");
-        var ci = btn.querySelector("svg:last-child");
-        btn.addEventListener("click", function(e){
-            e.stopPropagation();
-            var open = panel.classList.toggle("open");
-            mi.style.display = open ? "none" : "block";
-            ci.style.display = open ? "block" : "none";
-        });
-        document.addEventListener("click", function(e){
-            if(!panel.contains(e.target) && !btn.contains(e.target)){
-                panel.classList.remove("open");
-                mi.style.display = "block";ci.style.display = "none";
+        <div class="tag-cloud">
+            <a href="/item/?q=instagram+leaks" class="tag">#InstagramLeaks</a>
+            <a href="/item/?q=tiktok+leaks" class="tag">#TikTokLeaks</a>
+            <a href="/item/?q=onlyfans+leaks" class="tag">#OnlyFansLeaks</a>
+            <a href="/item/?q=twitter+leaks" class="tag">#TwitterLeaks</a>
+            <a href="/item/?q=telegram+leaks" class="tag">#TelegramLeaks</a>
+            <a href="/item/?q=discord+leaks" class="tag">#DiscordLeaks</a>
+            <a href="/item/?q=influencer+leaks" class="tag">#InfluencerLeaks</a>
+        </div>
+
+        <div class="featured-row">
+            <div class="featured-item"><span> Most requested this month</span><a href="/item/?q=most+requested+leaks">View </a></div>
+            <div class="featured-item"><span> New video leaks added today</span><a href="/item/?q=new+video+leaks">See new </a></div>
+            <div class="featured-item"><span> Telegram channel archives</span><a href="/item/?q=telegram+leak+archives">Browse </a></div>
+        </div>
+    </div>
+
+    <!-- QUERY-BASED RESULTS -->
+    <div id="query-results" class="query-results">
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/item/">Leaks</a> / <span id="bc-name"></span>
+        </div>
+
+        <div class="site-header" style="border-bottom: none; margin-bottom: 0;">
+            <div class="logo">
+                <div>LEAKED ARCHIVE</div>
+                <!-- H1 UTAMA: mengandung query + identitas subdomain/domain, paling atas tanpa penghalang -->
+                <h1 id="main-heading"></h1>
+            </div>
+            <div class="trend-badge" id="trend-badge-dynamic"> trending</div>
+        </div>
+
+        <div class="stat-strip" id="stat-strip-dynamic"></div>
+
+        <!-- INTRO -->
+        <div id="intro-box" style="background: var(--bg-card); border-radius: 16px; padding: 1rem; margin-bottom: 1.5rem; border-left: 3px solid var(--accent-primary);">
+            <p id="intro-text"></p>
+        </div>
+
+        <!-- SECTION: LEAKED MEDIA GALLERY -->
+        <!-- H2: mengandung query + identitas -->
+        <h2 id="gallery-heading" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-primary); margin-bottom: 0.75rem;"></h2>
+        <div class="gallery-grid" id="media-gallery"></div>
+
+        <!-- SECTION: PLATFORM SOURCES -->
+        <!-- H3: mengandung query + identitas -->
+        <h3 id="platform-heading" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-primary); margin: 1.5rem 0 0.75rem;"></h3>
+        <div class="featured-row" id="platform-sources"></div>
+
+        <!-- SECTION: RELATED LEAKS -->
+        <h3 id="related-heading" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-primary); margin: 1.5rem 0 0.75rem;"></h3>
+        <div class="tag-cloud" id="related-leaks"></div>
+
+        <!-- SECTION: FAQ -->
+        <h3 id="faq-heading" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-primary); margin: 1.5rem 0 0.75rem;"></h3>
+        <div id="faq-content" style="font-size: 0.75rem; color: #9ca3af;"></div>
+
+        <hr />
+        <div class="footer-note">
+            Independent leak archive � Preserved for documentation � Updated <span id="update-date"></span>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    // ==================== FUNGSI UTILITY ====================
+    // Mendapatkan subdomain/domain utama (tanpa protocol, tanpa path)
+    function getSiteIdentity() {
+        const hostname = window.location.hostname;
+        let identity = hostname;
+        
+        // Hilangkan 'www.' jika ada
+        identity = identity.replace(/^www\./, '');
+        
+        // Untuk kasus github.io atau pages.dev, ambil bagian subdomain pertama
+        if (hostname.includes('github.io') || hostname.includes('pages.dev')) {
+            const parts = hostname.split('.');
+            if (parts.length >= 3) {
+                // Ambil subdomain pertama untuk identity
+                identity = parts[0];
             }
-        });
-        panel.addEventListener("click", function(e){e.stopPropagation();});
-    })();
-    </script>
-
-    <!-- AVATAR -->
-    <script>
-    (function() {
-        var hostname = window.location.hostname;
-        var parts = hostname.split(".");
-        var fullName = parts[0];
-        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
-        function h(s) {var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return Math.abs(h);}
-        var dh = h(fullName);
-        var clean = fullName.replace(/-/g," ");
-        var w = clean.split(" "), init = "";
-        for (var i=0;i<Math.min(w.length,3);i++){if(w[i].length>0)init+=w[i].charAt(0).toUpperCase();}
-        if(init.length<2)init=fullName.substring(0,3).toUpperCase();
-        document.getElementById("domainAvatar").innerHTML = "<svg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\"><rect width=\"30\" height=\"30\" rx=\"8\" fill=\"#f59e0b\"/><text x=\"15\" y=\"20\" text-anchor=\"middle\" fill=\"#000\" font-size=\"12\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
-    })();
-    </script>
-
-    <!-- BANNER 06: TOP -->
-    <div class="ad-banner-full">
-        <div class="ad-box ad-desktop">{% include /ads/banner/06.html %}</div>
-        <div class="ad-box ad-mobile">{% include /ads/banner/04.html %}</div>
-    </div>
-
-    <!-- DESKTOP NAV -->
-    <nav class="desktop-nav">
-        <a href="/">Home</a>
-        <a href="/contact/">Contact</a>
-        <a href="/privacy-policy/">Privacy</a>
-        <a href="/terms-and-conditions/">Terms</a>
-    </nav>
-
-    <!-- ==========================================
-        AMBIL 50 POSTINGAN KATEGORI "indo02"
-        ========================================== -->
-    {% assign all_posts = site.categories['indo02'] | slice: 0, 50 %}
-
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
-
-        {% if all_posts.size > 0 %}
-
-        <!-- ========== HERO: POST 0 (16:9) ========== -->
-        {% assign hero_post = all_posts | first %}
-        <section class="hero-section">
-            <article class="hero-card">
-                <a href="{{ hero_post.url }}">
-                    {% if hero_post.image %}
-                        <img src="{{ hero_post.image | relative_url }}" alt="{{ hero_post.title }}" loading="eager">
-                    {% endif %}
-                    <div class="hero-overlay">
-                        <span class="hero-badge">Featured</span>
-                        <h2>{{ hero_post.title }}</h2>
-                        {% assign hero_desc = hero_post.content | split: '<p>' | first %}
-                        <div class="spo">{{ hero_desc }}</div>
-                    </div>
-                </a>
-            </article>
-        </section>
-
-        <!-- BANNER 01 -->
-        <div class="ad-banner-full">
-            <div class="ad-box ad-desktop">{% include /ads/banner/01.html %}</div>
-            <div class="ad-box ad-mobile">{% include /ads/banner/04.html %}</div>
-        </div>
-
-        <!-- ========== TRENDING NOW: POST 1-10 (3:4 portrait scroll) ========== -->
-        {% assign trending = all_posts | slice: 1, 10 %}
-        {% if trending.size > 0 %}
-        <div class="section-header">
-            <h2><span class="icon-dot"></span> Trending Now</h2>
-        </div>
-        <section class="scroll-section">
-            <div class="scroll-row">
-                {% for post in trending %}
-                <article class="scroll-card">
-                    <a href="{{ post.url }}">
-                        {% if post.image %}
-                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                        {% endif %}
-                        <div class="scroll-card-body">
-                            <h3>{{ post.title }}</h3>
-                            {% assign scroll_desc = post.content | split: '<p>' | first %}
-                            <div class="spo">{{ scroll_desc }}</div>
-                        </div>
-                    </a>
-                </article>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
-
-        <!-- BANNER 02 -->
-        <div class="ad-native" style="padding:0 12px;">
-            <div class="ad-box ad-both">{% include /ads/banner/02.html %}</div>
-        </div>
-
-        <!-- ========== LATEST: POST 11-30 (1:1 square grid) ========== -->
-        {% assign latest = all_posts | slice: 11, 20 %}
-        {% if latest.size > 0 %}
-        <div class="section-header">
-            <h2><span class="icon-dot"></span> Latest</h2>
-        </div>
-        <section class="grid-section">
-            <div class="grid-masonry">
-                {% for post in latest %}
-                    {% assign ad_pos = forloop.index %}
-                    <article class="grid-card">
-                        <a href="{{ post.url }}">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                            <div class="grid-card-overlay">
-                                <h3>{{ post.title }}</h3>
-                                {% assign grid_desc = post.content | split: '<p>' | first %}
-                                <div class="spo">{{ grid_desc }}</div>
-                                <span>{{ post.date | date: "%b %d, %Y" }}</span>
-                            </div>
-                        </a>
-                    </article>
-                    {% assign mod = ad_pos | modulo: 5 %}
-                    {% if mod == 0 %}
-                    <div class="ad-native-card">
-                        <div class="ad-box ad-both">{% include /ads/banner/03.html %}</div>
-                    </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
-
-        <!-- BANNER 08 -->
-        <div class="ad-banner-full">
-            <div class="ad-box ad-both">{% include /ads/banner/08.html %}</div>
-        </div>
-
-        <!-- ========== YOU MAY LIKE: POST 31-49 (3:4 portrait scroll) ========== -->
-        {% assign more = all_posts | slice: 31, 19 %}
-        {% if more.size > 0 %}
-        <div class="section-header">
-            <h2><span class="icon-dot"></span> You May Like</h2>
-        </div>
-        <section class="scroll-section">
-            <div class="scroll-row">
-                {% for post in more %}
-                <article class="scroll-card">
-                    <a href="{{ post.url }}">
-                        {% if post.image %}
-                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                        {% endif %}
-                        <div class="scroll-card-body">
-                            <h3>{{ post.title }}</h3>
-                            {% assign more_desc = post.content | split: '<p>' | first %}
-                            <div class="spo">{{ more_desc }}</div>
-                        </div>
-                    </a>
-                </article>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
-
-        {% else %}
-        <div class="empty-section" style="margin-top:60px;">
-            <p>🚫 No posts found in category <strong>indo02</strong></p>
-        </div>
-        {% endif %}
-
-    </div>
-
-    <!-- BANNER 07: BOTTOM -->
-    <div class="ad-banner-full">
-        <div class="ad-box ad-desktop">{% include /ads/banner/07.html %}</div>
-        <div class="ad-box ad-mobile">{% include /ads/banner/04.html %}</div>
-    </div>
-
-    {% include /ads/gobloggugel/sosmed.html %}
-    {% include footer.html %}
-
-</body>
-</html>
+            // Kapitalisasi huruf pertama
+            identity = identity.charAt(0).toUpperCase() + identity.slice(1);
+        } else if (hostname.split('.').length > 2) {
+            // Subdomain seperti sub-domain.fazri.my
+            const parts = hostname.split('.');
+            identity = parts[0];
+            identity = identity.charAt(0).toUpperCase() + identity.slice(1);
+        } else {
+            // Domain utama seperti fazri.my -> kapitalisasi huruf pertama di bagian sebelum .my/.com
+            const mainPart = hostname.split('.')[0];
+            identity = mainPart.charAt(0).toUpperCase() + mainPart.slice(1);
+        }
+        
+        return identity;
+    }
     
+    // Format query menjadi kapitalisasi awal tiap kata
+    function formatQuery(str) {
+        if (!str) return '';
+        return str.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    }
+    
+    // Buat title dinamis berdasarkan query dan identity (konsisten, tidak berubah saat refresh)
+    function generateTitle(queryFormatted, siteIdentity) {
+        // Contoh: "Cute Girl on Sub Domain" atau "Cute Girl on Fazri"
+        return `${queryFormatted} on ${siteIdentity}`;
+    }
+    
+    // Buat variasi kalimat untuk H1 (konsisten)
+    function generateH1(queryFormatted, siteIdentity) {
+        return `${queryFormatted} � Leaked Archive on ${siteIdentity}`;
+    }
+    
+    // Buat variasi untuk H2
+    function generateH2(queryFormatted, siteIdentity) {
+        return ` ${queryFormatted} � Media Collections on ${siteIdentity}`;
+    }
+    
+    // Buat variasi untuk H3 (platform)
+    function generatePlatformsH3(queryFormatted, siteIdentity) {
+        return ` ${queryFormatted} � Leak Sources on ${siteIdentity}`;
+    }
+    
+    // Buat variasi untuk H3 (related)
+    function generateRelatedH3(queryFormatted, siteIdentity) {
+        return ` Related to ${queryFormatted} � Curated by ${siteIdentity}`;
+    }
+    
+    // Buat variasi untuk H3 (FAQ)
+    function generateFaqH3(queryFormatted, siteIdentity) {
+        return ` About ${queryFormatted} Archive � ${siteIdentity}`;
+    }
+    
+    // ==================== EKSEKUSI UTAMA ====================
+    const urlParams = new URLSearchParams(window.location.search);
+    let query = urlParams.get('q');
+    
+    const defaultDiv = document.getElementById('default-home');
+    const queryDiv = document.getElementById('query-results');
+    
+    // JIKA TIDAK ADA QUERY: TAMPILKAN DEFAULT HOME
+    if (!query) {
+        defaultDiv.style.display = 'block';
+        queryDiv.style.display = 'none';
+        
+        // Update canonical default (home)
+        const canonical = document.getElementById('dynamic-canonical');
+        if (canonical) {
+            canonical.setAttribute('href', window.location.href.split('?')[0]);
+        }
+        // Set title default
+        document.title = "Leaked Content Archive � Influencer Index";
+        return;
+    }
+    
+    // ADA QUERY: TAMPILKAN QUERY RESULTS
+    defaultDiv.style.display = 'none';
+    queryDiv.style.display = 'block';
+    
+    // Bersihkan dan format query
+    query = decodeURIComponent(query.replace(/\+/g, ' '));
+    const queryFormatted = formatQuery(query);
+    const siteIdentity = getSiteIdentity(); // Contoh: "Sub Domain", "Fazri", "Ini Sub", "Acak Sub"
+    
+    // GENERATE TITLE (konsisten)
+    const dynamicTitle = generateTitle(queryFormatted, siteIdentity);
+    document.title = dynamicTitle;
+    const titleMeta = document.getElementById('dynamic-title');
+    if (titleMeta) titleMeta.innerText = dynamicTitle;
+    
+    // UPDATE CANONICAL LINK: full URL halaman saat ini (dinamis untuk multi query & multi subdomain)
+    const currentFullUrl = window.location.href;
+    const canonicalLink = document.getElementById('dynamic-canonical');
+    if (canonicalLink) {
+        canonicalLink.setAttribute('href', currentFullUrl);
+    }
+    
+    // UPDATE META DESCRIPTION (opsional tetap relevan)
+    const metaDesc = document.getElementById('dynamic-description');
+    if (metaDesc) {
+        metaDesc.setAttribute('content', `Complete leaked content archive for ${queryFormatted} on ${siteIdentity}. Curated collection of photos, videos, and exclusive material.`);
+    }
+    
+    // UPDATE H1 PALING ATAS (tanpa section yang menghalangi)
+    const h1Element = document.getElementById('main-heading');
+    if (h1Element) {
+        h1Element.innerHTML = generateH1(queryFormatted, siteIdentity);
+    }
+    
+    // UPDATE H2
+    const h2Element = document.getElementById('gallery-heading');
+    if (h2Element) {
+        h2Element.innerHTML = generateH2(queryFormatted, siteIdentity);
+    }
+    
+    // UPDATE H3 PLATFORMS
+    const h3Platform = document.getElementById('platform-heading');
+    if (h3Platform) {
+        h3Platform.innerHTML = generatePlatformsH3(queryFormatted, siteIdentity);
+    }
+    
+    // UPDATE H3 RELATED
+    const h3Related = document.getElementById('related-heading');
+    if (h3Related) {
+        h3Related.innerHTML = generateRelatedH3(queryFormatted, siteIdentity);
+    }
+    
+    // UPDATE H3 FAQ
+    const h3Faq = document.getElementById('faq-heading');
+    if (h3Faq) {
+        h3Faq.innerHTML = generateFaqH3(queryFormatted, siteIdentity);
+    }
+    
+    // UPDATE BREADCRUMB
+    document.getElementById('bc-name').innerText = queryFormatted;
+    
+    // UPDATE INTRO TEXT (menggambarkan identitas)
+    const introEl = document.getElementById('intro-text');
+    introEl.innerHTML = `Complete leaked content archive for <strong>${queryFormatted}</strong> on <strong>${siteIdentity}</strong>. This collection includes preserved photos, videos, and exclusive material that circulated across Telegram, Discord, Twitter, and other platforms. Independent internet preservation project by ${siteIdentity}.`;
+    
+    // DETEKSI KONTEN TYPE (untuk stat strip dll)
+    const qLow = query.toLowerCase();
+    let contentType = 'general';
+    if (qLow.includes('video') || qLow.includes('clip')) contentType = 'video';
+    else if (qLow.includes('photo') || qLow.includes('image') || qLow.includes('gallery')) contentType = 'photo';
+    else if (qLow.includes('onlyfans')) contentType = 'onlyfans';
+    else if (qLow.includes('tiktok')) contentType = 'tiktok';
+    else if (qLow.includes('instagram')) contentType = 'instagram';
+    else if (qLow.includes('twitter')) contentType = 'twitter';
+    else if (qLow.includes('telegram')) contentType = 'telegram';
+    
+    // Helper untuk membuat link
+    function makeLeakLink(variant, label) {
+        const newQ = `${query.toLowerCase()} ${variant}`;
+        return `<a href="/item/?q=${encodeURIComponent(newQ)}" style="color: var(--accent-primary-hover);">${label}</a>`;
+    }
+    
+    // MEDIA GALLERY (4 cards)
+    const mediaCards = [
+        { icon: '', category: 'PHOTO', title: 'Full Leaked Photo Set', stats: ' 50+ images', variant: 'leaked photos', label: 'View gallery' },
+        { icon: '', category: 'VIDEO', title: 'Leaked Video Compilation', stats: ' 20+ clips', variant: 'leaked videos', label: 'Watch archive' },
+        { icon: '', category: 'EXCLUSIVE', title: 'Rare / Unseen Content', stats: ' limited circulation', variant: 'rare leaks', label: 'Access vault' },
+        { icon: '', category: 'COMPLETE', title: 'Full Archive Dump', stats: ' all content', variant: 'full archive', label: 'Download index' }
+    ];
+    document.getElementById('media-gallery').innerHTML = mediaCards.map(card => `
+        <div class="leak-card">
+            <div class="card-media">${card.icon}</div>
+            <div class="card-content">
+                <div class="card-category">${card.category}</div>
+                <div class="card-title">${card.title}</div>
+                <div class="card-stats">${card.stats}</div>
+                <div class="card-link">${makeLeakLink(card.variant, card.label)}</div>
+            </div>
+        </div>
+    `).join('');
+    
+    // PLATFORM SOURCES
+    const platformItems = [
+        { name: 'Telegram Channels', variant: 'telegram leaks', label: 'View source' },
+        { name: 'Discord Servers', variant: 'discord leaks', label: 'Explore' },
+        { name: 'Twitter / X', variant: 'twitter leaks', label: 'See threads' },
+        { name: 'Reddit Archives', variant: 'reddit leaks', label: 'Browse' }
+    ];
+    document.getElementById('platform-sources').innerHTML = platformItems.map(item => `
+        <div class="featured-item">
+            <span> ${item.name}</span>
+            ${makeLeakLink(item.variant, item.label)}
+        </div>
+    `).join('');
+    
+    // RELATED LEAKS (tags)
+    const queryLower = query.toLowerCase();
+    const relatedVariants = [
+        `${queryLower} onlyfans leaks`, `${queryLower} instagram leaks`, `${queryLower} tiktok leaks`,
+        `similar influencers leaks`, `trending leaked content`, `viral leak archive`,
+        `${queryLower} exclusive content`, `${queryLower} private leaks`
+    ];
+    document.getElementById('related-leaks').innerHTML = relatedVariants.map(v => 
+        `<a href="/item/?q=${encodeURIComponent(v)}" class="tag">#${v.replace(/ /g, '_')}</a>`
+    ).join('');
+    
+    // FAQ
+    const faqHtml = `
+        <p><strong>What's included in this ${queryFormatted} leak archive on ${siteIdentity}?</strong><br>Complete collection of leaked photos, videos, and exclusive content from Telegram, Discord, and Twitter archives, curated by ${siteIdentity}.</p>
+        <p style="margin-top:0.75rem;"><strong>How often is this updated?</strong><br>New leaks are added as they surface across preservation networks.</p>
+        <p style="margin-top:0.75rem;"><strong>Where do these leaks come from?</strong><br>Sources include private Telegram channels, Discord servers, and viral Twitter threads.</p>
+    `;
+    document.getElementById('faq-content').innerHTML = faqHtml;
+    
+    // dynamic stat strip
+    const today = new Date();
+    const dateStr = today.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    document.getElementById('update-date').innerText = dateStr;
+    
+    const statStrip = document.getElementById('stat-strip-dynamic');
+    statStrip.innerHTML = `
+        <span> <strong>${Math.floor(Math.random() * 100) + 50}+</strong> media files</span>
+        <span> <strong>viral</strong> status</span>
+        <span> <strong>added</strong> ${dateStr}</span>
+        <span> <strong>source</strong> ${siteIdentity}</span>
+    `;
+    
+    // trending badge dynamic
+    const badge = document.getElementById('trend-badge-dynamic');
+    badge.innerHTML = ` ${queryFormatted} on ${siteIdentity}`;
+    
+})();
+</script>
+
+
+
+{% include /ads/gobloggugel/sosmed.html %}
+{% include footer.html %}
+</div></body>
+</html>
